@@ -12,12 +12,13 @@ import Slick from "vue-slick";
 
 import Widget from "./components/Widget.vue";
 
-const url = "http://api.openweathermap.org/data/2.5/forecast/daily/";
+const url = "https://api.openweathermap.org/data/2.5/forecast/daily/";
 
 const params = {
-  q: "Tokyo",
   APPID: "38c90f844d22569c51c0bf251490993a",
-  units: "metric"
+  cnt: 7,
+  lat: "",
+  lon: ""
 };
 
 export default {
@@ -32,23 +33,29 @@ export default {
     };
   },
   methods: {
-    get_ajax() {
-      console.log("get_ajax");
+    getLocation() {
+      if (navigator.geolocation) {
+        console.log("使える");
+        navigator.geolocation.getCurrentPosition(
+          pos => this.getWeather(pos),
+          err => console.log(err)
+        );
+      }
+      // this.getWeather();
+    },
+    getWeather(pos) {
+      params.lat = pos.coords.latitude;
+      params.lon = pos.coords.longitude;
       return axios.get(url, { params }).then(res => {
         console.log(res);
         this.city = res.data.city.name;
         this.forcastLists = res.data.list;
         console.log(this.forcastData);
-        // return this.$data[forcastData];
-        // this.forcat_data = res.data.list;
-        // Vue.set(this, name, res.list);
-        // this.$emit("GET_AJAX_COMPLETED");
       });
     }
   },
-  created() {
-    console.log("created");
-    this.get_ajax();
+  beforeMount() {
+    this.getLocation();
   }
 };
 </script>

@@ -1,5 +1,12 @@
 <template>
   <div class="frame">
+    <h2>Monday</h2>
+    <p>22 Nov 2019 8:30pm</p>
+
+    <p>ThunderStorm</p>
+    <img src alt>
+    <p>28.C</p>
+
     <h3>{{city}}</h3>
   </div>
 </template>
@@ -10,8 +17,10 @@ export default {
     forcastList: Array,
     city: String
   },
-  mounted() {
-    // console.log(this.forcast_data);
+  computed: {
+    // forcastList() {
+    //   console.log("changed");
+    // }
   }
 };
 </script>
@@ -20,17 +29,6 @@ export default {
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 .frame {
   border: 1px solid #222222;
