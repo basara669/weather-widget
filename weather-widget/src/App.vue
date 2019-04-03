@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <Widget data="forcast_data"/>
+    <div v-for="(forcastList, key, index) in forcastLists" :key="index">
+      <Widget :forcast-List="forcastList" :city="city"/>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Slick from "vue-slick";
+
 import Widget from "./components/Widget.vue";
 
 const url = "http://api.openweathermap.org/data/2.5/forecast/daily/";
@@ -23,7 +27,8 @@ export default {
   },
   data() {
     return {
-      forcast_data: null
+      forcastLists: [],
+      city: ""
     };
   },
   methods: {
@@ -31,7 +36,10 @@ export default {
       console.log("get_ajax");
       return axios.get(url, { params }).then(res => {
         console.log(res);
-        this.forcast_data = res.data;
+        this.city = res.data.city.name;
+        this.forcastLists = res.data.list;
+        console.log(this.forcastData);
+        // return this.$data[forcastData];
         // this.forcat_data = res.data.list;
         // Vue.set(this, name, res.list);
         // this.$emit("GET_AJAX_COMPLETED");

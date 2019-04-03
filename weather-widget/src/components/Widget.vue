@@ -1,16 +1,17 @@
 <template>
   <div class="frame">
-    <pre>{{msg}}</pre>
+    <h3>{{city}}</h3>
   </div>
 </template>
 <script>
 export default {
   name: "Widget",
   props: {
-    msg: Object
+    forcastList: Array,
+    city: String
   },
   mounted() {
-    console.log(this.msg);
+    // console.log(this.forcast_data);
   }
 };
 </script>
