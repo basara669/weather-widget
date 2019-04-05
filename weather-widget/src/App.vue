@@ -1,21 +1,18 @@
 <template>
   <div id="app">
-    <carousel
-      :paginationEnabled="false"
-      :perPageCustom="[[768, 3]]"
-      :centerMode="true"
-      :navigateTo="2"
-    >
-      <slide v-for="(forcastList, key, index) in forcastLists" :key="index" data-index="index">
-        <Widget :forcast-list="forcastList" :city="city"/>
-      </slide>
-    </carousel>
+    <swiper :options="swiperOption">
+      <swiper-slide v-for="(forcastList, key, index) in forcastLists" :key="index">
+        <Widget :forcast-list="forcastList" :city="city" :current-index="index"/>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { Carousel, Slide } from "vue-carousel";
+
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 import Widget from "./components/Widget.vue";
 
@@ -34,13 +31,21 @@ export default {
   name: "app",
   components: {
     Widget,
-    Carousel,
-    Slide
+    swiper,
+    swiperSlide
   },
   data() {
     return {
       forcastLists: [],
-      city: ""
+      city: "",
+      currentIndex: 0,
+      swiperOption: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        keyboard: true
+      }
     };
   },
   methods: {
@@ -75,5 +80,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.swiper-container {
+  height: 500px;
 }
 </style>

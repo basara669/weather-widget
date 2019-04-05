@@ -1,13 +1,16 @@
 <template>
   <div class="frame">
-    <h2>{{weekDay}}</h2>
-    <p>{{today}}</p>
+    <h2 class="l-Text">{{weekDay}}</h2>
+    <p class="s-Text">{{today}}</p>
 
-    <p>{{weather}}</p>
-    <img :src="weatherIcon" alt>
-    <p>{{temp}}.C</p>
+    <h2>{{weather}}</h2>
+    <p>
+      <img :src="weatherIcon" alt>
+      <span class="l-Text">{{temp}}.C</span>
+    </p>
 
     <h3>{{city}}</h3>
+    <p>{{currentIndex}}</p>
   </div>
 </template>
 
@@ -17,7 +20,8 @@ export default {
   name: "Widget",
   props: {
     forcastList: Object,
-    city: String
+    city: String,
+    currentIndex: Number
   },
   data() {
     return {
@@ -94,11 +98,29 @@ export default {
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
+  font-weight: bold;
+  font-size: 24px;
 }
 .frame {
   border: 1px solid #222222;
-  width: 500px;
-  height: 600px;
-  margin: 0 auto;
+  border-radius: 12px;
+  width: 300px;
+  height: 400px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+img {
+  height: 80px;
+  widows: 80px;
+}
+.l-Text {
+  font-weight: bold;
+  font-size: 50px;
+  vertical-align: top;
+  margin-bottom: 0;
+}
+.s-Text {
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0;
 }
 </style>
