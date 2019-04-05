@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-for="(forcastList, key, index) in forcastLists" :key="index">
-      <Widget :forcast-List="forcastList" :city="city"/>
+      <Widget :forcast-list="forcastList" :city="city"/>
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@ const params = {
   APPID: "38c90f844d22569c51c0bf251490993a",
   cnt: 7,
   lat: "",
-  lon: ""
+  lon: "",
+  units: "metric"
 };
 
 export default {
@@ -41,7 +42,6 @@ export default {
           err => console.log(err)
         );
       }
-      // this.getWeather();
     },
     getWeather(pos) {
       params.lat = pos.coords.latitude;
@@ -50,7 +50,6 @@ export default {
         console.log(res);
         this.city = res.data.city.name;
         this.forcastLists = res.data.list;
-        console.log(this.forcastData);
       });
     }
   },
