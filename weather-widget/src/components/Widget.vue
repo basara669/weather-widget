@@ -10,6 +10,8 @@
     <h3>{{city}}</h3>
   </div>
 </template>
+
+
 <script>
 export default {
   name: "Widget",
@@ -80,12 +82,9 @@ export default {
     this.today =
       date + " " + month + " " + year + " " + hour + ":" + min + " " + ap;
 
-    console.log(
-      date + " " + month + " " + year + " " + hour + ":" + min + " " + ap
-    );
-
     //create weekDay
     this.weekDay = week[dt.getDay()];
+
     this.temp = Math.round(this.forcastList.temp.day);
   }
 };

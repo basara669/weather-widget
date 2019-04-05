@@ -1,14 +1,21 @@
 <template>
   <div id="app">
-    <div v-for="(forcastList, key, index) in forcastLists" :key="index">
-      <Widget :forcast-list="forcastList" :city="city"/>
-    </div>
+    <carousel
+      :paginationEnabled="false"
+      :perPageCustom="[[768, 3]]"
+      :centerMode="true"
+      :navigateTo="2"
+    >
+      <slide v-for="(forcastList, key, index) in forcastLists" :key="index" data-index="index">
+        <Widget :forcast-list="forcastList" :city="city"/>
+      </slide>
+    </carousel>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Slick from "vue-slick";
+import { Carousel, Slide } from "vue-carousel";
 
 import Widget from "./components/Widget.vue";
 
@@ -19,13 +26,16 @@ const params = {
   cnt: 7,
   lat: "",
   lon: "",
+  //changed to Celsius
   units: "metric"
 };
 
 export default {
   name: "app",
   components: {
-    Widget
+    Widget,
+    Carousel,
+    Slide
   },
   data() {
     return {
@@ -36,7 +46,6 @@ export default {
   methods: {
     getLocation() {
       if (navigator.geolocation) {
-        console.log("使える");
         navigator.geolocation.getCurrentPosition(
           pos => this.getWeather(pos),
           err => console.log(err)
@@ -47,7 +56,6 @@ export default {
       params.lat = pos.coords.latitude;
       params.lon = pos.coords.longitude;
       return axios.get(url, { params }).then(res => {
-        console.log(res);
         this.city = res.data.city.name;
         this.forcastLists = res.data.list;
       });
