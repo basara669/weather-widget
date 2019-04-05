@@ -3,14 +3,17 @@
     <h2 class="l-Text">{{weekDay}}</h2>
     <p class="s-Text">{{today}}</p>
 
-    <h2>{{weather}}</h2>
+    <h2>
+      {{weather}}
+      <br>
+      {{weatherDescription}}
+    </h2>
     <p>
       <img :src="weatherIcon" alt>
       <span class="l-Text">{{temp}}.C</span>
     </p>
 
     <h3>{{city}}</h3>
-    <p>{{currentIndex}}</p>
   </div>
 </template>
 
@@ -20,8 +23,7 @@ export default {
   name: "Widget",
   props: {
     forcastList: Object,
-    city: String,
-    currentIndex: Number
+    city: String
   },
   data() {
     return {
@@ -97,15 +99,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
-  margin: 40px 0 0;
+  margin: 40px 0;
   font-weight: bold;
   font-size: 24px;
 }
 .frame {
-  border: 1px solid #222222;
+  border: 1px solid #aaa;
   border-radius: 12px;
   width: 300px;
-  height: 400px;
+  height: auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 img {

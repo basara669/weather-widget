@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" ref="mySwiper">
       <swiper-slide v-for="(forcastList, key, index) in forcastLists" :key="index">
-        <Widget :forcast-list="forcastList" :city="city" :current-index="index"/>
+        <Widget :forcast-list="forcastList" :city="city"/>
       </swiper-slide>
     </swiper>
   </div>
@@ -38,13 +38,21 @@ export default {
     return {
       forcastLists: [],
       city: "",
-      currentIndex: 0,
       swiperOption: {
+        effect: "coverflow",
+        grabCursor: true,
         slidesPerView: 3,
         spaceBetween: 30,
         centeredSlides: true,
         loop: true,
-        keyboard: true
+        keyboard: true,
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false
+        }
       }
     };
   },
@@ -64,10 +72,23 @@ export default {
         this.city = res.data.city.name;
         this.forcastLists = res.data.list;
       });
+    },
+    onSwipe(varuable) {
+      console.log(varuable.swiper.activeIndex);
     }
   },
   beforeMount() {
     this.getLocation();
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper;
+    }
+  },
+  mounted() {
+    this.swiper.on("slideChange", () => {
+      this.onSwipe(this);
+    });
   }
 };
 </script>
@@ -83,5 +104,17 @@ export default {
 }
 .swiper-container {
   height: 500px;
+}
+.swiper-inner {
+  width: 100%;
+  height: 450px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 350px;
 }
 </style>
