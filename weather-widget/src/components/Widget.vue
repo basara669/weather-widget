@@ -1,19 +1,24 @@
 <template>
   <div class="frame">
     <h2 class="l-Text">{{weekDay}}</h2>
-    <p class="s-Text">{{today}}</p>
+    <p class="s-Text">
+      {{todayFirst}}
+      <span v-show="showFlag.details">{{todaySecond}}</span>
+    </p>
 
-    <h2>
-      {{weather}}
-      <br>
-      {{weatherDescription}}
-    </h2>
+    <span v-show="showFlag.details">
+      <h2>
+        {{weather}}
+        <br>
+        {{weatherDescription}}
+      </h2>
+    </span>
     <p>
       <img :src="weatherIcon" alt>
       <span class="l-Text">{{temp}}.C</span>
     </p>
 
-    <h3>{{city}}</h3>
+    <h3 v-show="showFlag.details">{{city}}</h3>
   </div>
 </template>
 
@@ -23,20 +28,41 @@ export default {
   name: "Widget",
   props: {
     forcastList: Object,
-    city: String
+    city: String,
+    componentIndex: Number,
+    activeIndex: Number
   },
   data() {
     return {
       weather: "",
       weatherIcon: "",
       weatherDescription: "",
-      today: "",
+      todayFirst: "",
+      todaySecond: "",
       weekDay: "",
-      temp: ""
+      temp: "",
+      showFlag: {
+        details: false
+      }
     };
   },
+  watch: {
+    activeIndex(newVal, oldVal) {
+      this.changeActive();
+    }
+  },
+  methods: {
+    changeActive() {
+      if (this.componentIndex === this.activeIndex) {
+        this.showFlag.details = true;
+      } else {
+        this.showFlag.details = false;
+      }
+    }
+  },
   mounted() {
-    console.log(this.forcastList);
+    this.changeActive();
+
     //title
     this.weather = this.forcastList.weather[0].main;
     //description
@@ -85,8 +111,8 @@ export default {
     //add 0 to min data
     const min = ("0" + dt.getMinutes()).slice(-2);
 
-    this.today =
-      date + " " + month + " " + year + " " + hour + ":" + min + " " + ap;
+    this.todayFirst = date + " " + month + " " + year;
+    this.todaySecond = hour + ":" + min + " " + ap;
 
     //create weekDay
     this.weekDay = week[dt.getDay()];

@@ -2,7 +2,12 @@
   <div id="app">
     <swiper :options="swiperOption" ref="mySwiper">
       <swiper-slide v-for="(forcastList, key, index) in forcastLists" :key="index">
-        <Widget :forcast-list="forcastList" :city="city"/>
+        <Widget
+          :forcast-list="forcastList"
+          :city="city"
+          :component-index="key"
+          :active-index="activeIndex"
+        />
       </swiper-slide>
     </swiper>
   </div>
@@ -38,6 +43,8 @@ export default {
     return {
       forcastLists: [],
       city: "",
+      componentIndex: 0,
+      activeIndex: 0,
       swiperOption: {
         effect: "coverflow",
         grabCursor: true,
@@ -74,7 +81,7 @@ export default {
       });
     },
     onSwipe(varuable) {
-      console.log(varuable.swiper.activeIndex);
+      this.activeIndex = varuable.swiper.activeIndex;
     }
   },
   beforeMount() {
