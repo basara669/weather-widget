@@ -14,15 +14,22 @@
 </template>
 
 <script>
+//axios was familiar for me
 import axios from "axios";
 
+//I used vue-awesome-swiper
+//In this app, I have to get which is active or not
+//this library could do that.
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 import Widget from "./components/Widget.vue";
 
-const url = "https://api.openweathermap.org/data/2.5/forecast/daily/";
+//In this app, I didn't use vuex, because this app is not
+//that big and don't need that big store system.
 
+// openweathermap settings
+const url = "https://api.openweathermap.org/data/2.5/forecast/daily/";
 const params = {
   APPID: "38c90f844d22569c51c0bf251490993a",
   cnt: 7,
